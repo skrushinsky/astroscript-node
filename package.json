@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "Library of astronomical/astrological calculations",
   "private": true,
+  "main": "src/main.js",
   "directories": {
     "lib": "src",
     "test": "test"

@@ -175,5 +175,26 @@ const self = module.exports = {
 			}
 			return this._cusps;
 		}
+
+		serialize() {
+			const data = {
+				name: this.name,
+				date: this.date,
+				djd: this.djd,
+				deltaT: this.deltaT,	
+				lst: this.lst,				
+				geo: this.geo,
+				options: this.options,				
+				obliquity: this.ephemeris.obliquity,
+				nutation: {
+					dpsi: this.ephemeris.dpsi,
+					deps: this.ephemeris.deps
+				},						
+				planets: this.planets,
+				points: this.points,
+				cusps: this.cusps
+			}
+			return JSON.stringify(data)
+		}
 	}
 }
