@@ -261,7 +261,7 @@ const self = module.exports = {
         }
     },
 
-    // Given array of planetary positions [{ name: String, x: Double }...], yield each stellium
+    // Given array of planetary positions [{ name: String, x: degrees }...], yield each stellium
     // or a single planet in case there are no other planets closer than the gap (10° by default).
     // Technicaly that means partitioning of planetary positions with regard to their angular
     // distances.
