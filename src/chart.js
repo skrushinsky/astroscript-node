@@ -77,7 +77,7 @@ const self = module.exports = {
 
 		get planets() {
 			if (this._planets === null) {
-				this._planets = new Map()
+				this._planets = {}
 				const eph = this.ephemeris
 				for (let name of PLANETS) {
 					let pos
@@ -91,24 +91,22 @@ const self = module.exports = {
 							pos = eph.getPosition(name).geo
 					}
 
-					this._planets.set(
-						name, {
-							coords: {
-								x: pos.l,
-								y: pos.b,
-								z: pos.d
-							},
-							motion: eph.getDailyMotion(name),
-							house: houses.inHouse(pos.l, this.cusps)
-						}
-					)
+					this._planets[name] = {
+						coords: {
+							x: pos.l,
+							y: pos.b,
+							z: pos.d
+						},
+						motion: eph.getDailyMotion(name),
+						house: houses.inHouse(pos.l, this.cusps)
+					}
 				}
 
 				// aspects
 				const all = PLANETS.map(name => {
 					return {
 						name: name,
-						x: degrees(this._planets.get(name).coords.x)
+						x: degrees(this._planets[name].coords.x)
 					}
 				})
 				for (const plaName of PLANETS) {
@@ -118,7 +116,7 @@ const self = module.exports = {
 					for (const data of aspects.iterAspects(source, targets, this.options.orbsMethod, aspects.ALL)) {
 						plaAspects.push(data)
 					}
-					this._planets.get(plaName).aspects = plaAspects
+					this._planets[plaName].aspects = plaAspects
 				}
 			}
 			return this._planets;
@@ -130,11 +128,11 @@ const self = module.exports = {
 				const eps = this.ephemeris.obliquity
 				const theta = radians(this.geo[0])
 
-				this._points = new Map()
-				this._points.set('Midheaven', points.midheaven(ramc, eps))
-				this._points.set('Ascendant', points.ascendant(ramc, eps, theta))
-				this._points.set('Vertex', points.vertex(ramc, eps, theta))
-				this._points.set('EastPoint', points.eastpoint(ramc, eps))
+				this._points = {}
+				this._points['Midheaven'] = points.midheaven(ramc, eps)
+				this._points['Ascendant'] = points.ascendant(ramc, eps, theta)
+				this._points['Vertex'] = points.vertex(ramc, eps, theta)
+				this._points['EastPoint'] = points.eastpoint(ramc, eps)
 			}
 			return this._points
 		}
@@ -153,8 +151,8 @@ const self = module.exports = {
 					case 'Campanus':
 					case 'Topocentric':
 						const theta = radians(this.geo[0])
-						const asc = this.points.get('Ascendant')
-						const mc = this.points.get('Midheaven')
+						const asc = this.points['Ascendant']
+						const mc = this.points['Midheaven']
 						this._cusps = f(ramc, eps, theta, asc, mc)
 						break
 					case 'Morinus':
@@ -181,15 +179,15 @@ const self = module.exports = {
 				name: this.name,
 				date: this.date,
 				djd: this.djd,
-				deltaT: this.deltaT,	
-				lst: this.lst,				
+				deltaT: this.deltaT,
+				lst: this.lst,
 				geo: this.geo,
-				options: this.options,				
+				options: this.options,
 				obliquity: this.ephemeris.obliquity,
 				nutation: {
 					dpsi: this.ephemeris.dpsi,
 					deps: this.ephemeris.deps
-				},						
+				},
 				planets: this.planets,
 				points: this.points,
 				cusps: this.cusps
