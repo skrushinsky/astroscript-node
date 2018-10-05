@@ -23,21 +23,21 @@ const MINOR = MAJOR << 1
 const KEPLER = MAJOR << 2
 const ALL = MAJOR | MINOR | KEPLER
 
-const CONJUNCTION = new Aspect("Conjunction", "cnj", 0, Symbol.for('Neutral'), MAJOR)
-const VIGINTILE = new Aspect("Vigintile", "vgt", 18, Symbol.for('Neutral'), KEPLER)
-const QUINDECILE = new Aspect("Quindecile", "qdc", 24, Symbol.for('Neutral'), KEPLER)
-const SEMISEXTILE = new Aspect("Semisextile", "ssx", 30, Symbol.for('Positive'), MINOR)
-const DECILE = new Aspect("Decile", "dcl", 36, Symbol.for('Neutral'), KEPLER)
-const SEXTILE = new Aspect("Sextile", "sxt", 60, Symbol.for('Positive'), MAJOR)
-const SEMISQUARE = new Aspect("Semisquare", "ssq", 45, Symbol.for('Negative'), MINOR)
-const QUINTILE = new Aspect("Quintile", "qui", 72, Symbol.for('Neutral'), KEPLER)
-const SQUARE = new Aspect("Square", "sqr", 90, Symbol.for('Negative'), MAJOR)
-const TRIDECILE = new Aspect("Tridecile", "tdc", 108, Symbol.for('Positive'), MINOR)
-const TRINE = new Aspect("Trine", "tri", 120, Symbol.for('Positive'), MAJOR)
-const SESQUIQUADRATE = new Aspect("Sesquiquadrate", "sqq", 135, Symbol.for('Negative'), MINOR)
-const BIQUINTILE = new Aspect("Biquintile", "bqu", 144, Symbol.for('Neutral'), KEPLER)
-const QUINCUNX = new Aspect("Quincunx", "qcx", 150, Symbol.for('Negative'), MINOR)
-const OPPOSITION = new Aspect("Opposition", "opp", 180, Symbol.for('Negative'), MAJOR)
+const CONJUNCTION = new Aspect("Conjunction", "cnj", 0, 'Neutral', MAJOR)
+const VIGINTILE = new Aspect("Vigintile", "vgt", 18, 'Neutral', KEPLER)
+const QUINDECILE = new Aspect("Quindecile", "qdc", 24, 'Neutral', KEPLER)
+const SEMISEXTILE = new Aspect("Semisextile", "ssx", 30, 'Positive', MINOR)
+const DECILE = new Aspect("Decile", "dcl", 36, 'Neutral', KEPLER)
+const SEXTILE = new Aspect("Sextile", "sxt", 60, 'Positive', MAJOR)
+const SEMISQUARE = new Aspect("Semisquare", "ssq", 45, 'Negative', MINOR)
+const QUINTILE = new Aspect("Quintile", "qui", 72, 'Neutral', KEPLER)
+const SQUARE = new Aspect("Square", "sqr", 90, 'Negative', MAJOR)
+const TRIDECILE = new Aspect("Tridecile", "tdc", 108, 'Positive', MINOR)
+const TRINE = new Aspect("Trine", "tri", 120, 'Positive', MAJOR)
+const SESQUIQUADRATE = new Aspect("Sesquiquadrate", "sqq", 135, 'Negative', MINOR)
+const BIQUINTILE = new Aspect("Biquintile", "bqu", 144, 'Neutral', KEPLER)
+const QUINCUNX = new Aspect("Quincunx", "qcx", 150, 'Negative', MINOR)
+const OPPOSITION = new Aspect("Opposition", "opp", 180, 'Negative', MAJOR)
 
 const ASPECTS = new Set([
     CONJUNCTION, VIGINTILE, QUINDECILE, SEMISEXTILE, DECILE, SEXTILE,
