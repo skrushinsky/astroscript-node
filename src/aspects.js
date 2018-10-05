@@ -10,33 +10,12 @@ const { diffAngleDeg } = require('./mathutils.js');
 
 class Aspect {
     constructor(name, briefName, value, influence, typeFlag) {
-        this._name = name
-        this._briefName = briefName
-        this._value = value
-        this._influence = influence
-        this._typeFlag = typeFlag
+        this.name = name
+        this.briefName = briefName
+        this.value = value
+        this.influence = influence
+        this.typeFlag = typeFlag
     }
-
-    get value() {
-        return this._value
-    }
-
-    get name() {
-        return this._name
-    }
-
-    get briefName() {
-        return this._briefName
-    }
-
-    get influence() {
-        return this._influence
-    }
-
-    get typeFlag() {
-        return this._typeFlag
-    }
-
 }
 
 const MAJOR = 0x1

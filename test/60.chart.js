@@ -45,7 +45,7 @@ describe('Base Chart', _ => {
   }
 
   for (let name of PLANETS) {
-    const pla = chart.planets.get(name)
+    const pla = chart.planets[name]
     it(`${name} data`, () => {
       assert.hasAllKeys(pla, ['coords', 'motion', 'house', 'aspects'])
       assert.hasAllKeys(pla.coords, ['x', 'y', 'z'])
