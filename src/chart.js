@@ -23,6 +23,8 @@ const DEFAULT_OPT = {
 
 const self = module.exports = {
 
+	POINTS: ['Ascendant', 'Midheaven', 'Vertex', 'EastPoint'], 
+
 	BaseChart: class {
 		constructor({
 			name = 'New Chart',
