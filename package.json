@@ -20,5 +20,9 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "mocha": "^4.0.1"
+  },
+  "dependencies": {
+    "node-gd": "^1.5.4",
+    "simple-hex-to-rgb": "^1.0.0"
   }
 }
