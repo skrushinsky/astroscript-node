@@ -15,7 +15,7 @@ const ZODIAC_SYMBOLS_REG = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'v', 'x
 const ASC_SYMBOL = 'Z'
 const MC_SYMBOL = 'X'
 const RETRO_SYMBOL = '>'
-const TRIPL_COLORS = [0xDC143C, 0x8B4513, 0xADD8E6, 0x191970]
+const TRIPL_COLORS = [0xDC143C, 0x8B4513, 0x3691b0, 0x191970]
 const TRIPL_OPACITIES = [0.7, 0.7, 1, 0.7]
 
 const INFLUENCE_COLORS = {
