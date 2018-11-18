@@ -45,7 +45,6 @@ describe('True geometric positions, Duffett-Smith examples', _ => {
 
     for (let c of cases) {
         const got = eph.getPosition(c.name);
-        //console.log('got: ' + JSON.stringify(got, null, '  '));
         for (let k of ['l', 'b', 'r']) {
             it(`${c.name}: helio.${k}`, () => {
                 assert.approximately(got.helio[k], c.helio[k], 1E-4);

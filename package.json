@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "node-gd": "^1.5.4",
-    "simple-hex-to-rgb": "^1.0.0"
+    "simple-hex-to-rgb": "^1.0.0",
+    "sprintf-js": "^1.1.1"
   }
 }

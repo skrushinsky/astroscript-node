@@ -62,7 +62,7 @@ describe('Sign-Cusp System', _ => {
 
 describe('Equal from Asc', _ => {
     const got = houses.housesFunction(Symbol.for('Equal'))(radians(110.0));
-    console.log(JSON.stringify(got.map(_ => degrees(_))));
+    //log(JSON.stringify(got.map(_ => degrees(_))));
     const exp = [110.0, 140.0, 170.0, 200.0, 230.0, 260.0, 290.0, 320.0, 350.0, 20.0, 50.0, 80.0];
     for (let i = 0; i < 12; i++) {
         it(`cusp #${i+1}`, () => {

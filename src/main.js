@@ -15,6 +15,7 @@ const houses = require('./houses.js')
 const mathutils = require('./mathutils.js')
 const points = require('./points.js')
 const timeutils = require('./timeutils.js')
+const graphics = require('./graphics.js')
 
 module.exports = {
     aspects,
