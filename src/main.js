@@ -25,5 +25,6 @@ module.exports = {
     houses,
     mathutils,
     points,
-    timeutils
+    timeutils,
+    graphics
 }
