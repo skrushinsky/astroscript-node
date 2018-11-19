@@ -19,9 +19,9 @@ const TRIPL_COLORS = [0xDC143C, 0x8B4513, 0x3691b0, 0x191970]
 const TRIPL_OPACITIES = [0.7, 0.7, 1, 0.7]
 
 const INFLUENCE_COLORS = {
-  Negative: '#00008B', // DarkBlue
-  Positive: '#DC143C', // Crimson
-  Neutral: '#20B2AA' // LightSeaGreen
+  Negative: 0x00008B, // DarkBlue
+  Positive: 0xDC143C, // Crimson
+  Neutral: 0x20B2AA // LightSeaGreen
 }
 
 const PLANET_SYMBOLS = {
@@ -116,10 +116,10 @@ class Paper {
         this._fonts = {
             zodiac: resolve(`${FONTS_PATH}/ZodiacS.ttf`),
             planets: resolve(`${FONTS_PATH}/HamburgSymbols.ttf`),
-            regular: resolve(`${FONTS_PATH}/Roboto-Regular.ttf`),
-            bold: resolve(`${FONTS_PATH}/Roboto-Bold.ttf`)
-        }     
-        this._bgColor = bgColor       
+            regular: resolve(`${FONTS_PATH}/RobotoCondensed-Regular.ttf`),
+            bold: resolve(`${FONTS_PATH}/RobotoCondensed-Bold.ttf`)
+        }
+        this._bgColor = bgColor
     }
 
     get image() {
@@ -145,13 +145,13 @@ class Paper {
     font(key) {
         if (key in this._fonts) {
             return this._fonts[key]
-        } 
+        }
         throw new TypeError(`Unknown font: ${key}`)
     }
 
     clear() {
         this._image.fill(0, 0, this.bgColor)
-        this._image.alphaBlending(1)     
+        this._image.alphaBlending(1)
     }
 
     pol2rect(a, r) {
@@ -159,7 +159,7 @@ class Paper {
             x: Math.trunc(this._center.x + Math.cos(a) * r),
             y: Math.trunc(this._center.y + Math.sin(a) * r)
         }
-    }        
+    }
 
     drawCircle(radius, attributes={}) {
         const d = radius * 2
@@ -181,14 +181,19 @@ class Paper {
     drawLine(p1, p2, color, attributes={}) {
         if (attributes.thickness) {
             this._image.setThickness(attributes.thickness)
-        }          
+        }
         this._image.setAntiAliased(color)
-        this._image.line(p1.x, p1.y, p2.x, p2.y, color)
+        if (attributes.dashed) {
+            this._image.dashedLine(p1.x, p1.y, p2.x, p2.y, color)
+        } else {
+            this._image.line(p1.x, p1.y, p2.x, p2.y, color)
+        }
+
     }
 
-    drawRay(a, r1, r2, color, attributes={}) {          
+    drawRay(a, r1, r2, color, attributes={}) {
         this.drawLine(this.pol2rect(a, r1), this.pol2rect(a, r2), color, attributes)
-    }  
+    }
 
     drawText(pt, txt, font, size, color, angle=0) {
         let {x, y} = pt
@@ -234,13 +239,13 @@ class Wheel {
     // to screen point {x, y}
     lonToPoint(x, r) {
         return this.paper.pol2rect(this.zodiacToScreenAngle(x), r)
-    }    
+    }
 
     // Draw ray at ecliptic longitude lambda (in radians),
     // connecting r1 and r2 radii
     drawRay(lambda, r1, r2, color) {
         this.paper.drawRay(this.zodiacToScreenAngle(lambda), r1, r2, color)
-    }    
+    }
 }
 
 
@@ -254,7 +259,7 @@ class StandardWheel extends Wheel {
         //this._R = circlePercents.map( p => { return sz * p / 50 } )
         this._R = circlePercents.map( p => {
             return Math.trunc(sz * p / 100 / 2)
-        })        
+        })
     }
 
     _drawHouses() {
@@ -274,18 +279,18 @@ class StandardWheel extends Wheel {
             if (i == 0 || i == 9) {
                 const lbl = i == 0 ? ASC_SYMBOL : MC_SYMBOL
                 const pt = this.lonToPoint(mathutils.reduceRad(x + labelOffset), rNumber)
-                this._paper.drawText(pt, lbl, plaFont, Math.trunc(fs*0.9), angLblColor)                
+                this._paper.drawText(pt, lbl, plaFont, Math.trunc(fs*0.9), angLblColor)
             } else {
                 const pt = this.lonToPoint(x + mathutils.radians(3), rNumber)
-                this._paper.drawText(pt, ROMAN_NUMBERS[i], regFont, Math.trunc(fs*0.4), angLblColor)                
-            }           
+                this._paper.drawText(pt, ROMAN_NUMBERS[i], regFont, Math.trunc(fs*0.4), angLblColor)
+            }
             this._paper.drawLine(
-                this.lonToPoint(x, r), 
-                this.lonToPoint(x, this._R[3]), 
-                isAngular ? angleColor : cuspColor, 
+                this.lonToPoint(x, r),
+                this.lonToPoint(x, this._R[3]),
+                isAngular ? angleColor : cuspColor,
                 { thickness: isAngular ? 4 : 1}
             )
-        }      
+        }
     }
 
     _drawZodiacScale(startLon, r1, r2) {
@@ -296,8 +301,8 @@ class StandardWheel extends Wheel {
         for (let i = 0; i < 30; i++) {
             const r = i % 10 == 0 ? rDec : rDeg
             this.drawRay(
-                mathutils.radians(startLon + i), r[0], r[1], 
-                gd.trueColorAlpha(0, 0, 0, 20), 
+                mathutils.radians(startLon + i), r[0], r[1],
+                gd.trueColorAlpha(0, 0, 0, 20),
                 { 'thickness': 1 }
             )
         }
@@ -312,7 +317,7 @@ class StandardWheel extends Wheel {
         this._paper.drawCircle(this._R[1], {
             thickness: 3,
             stroke: gd.trueColorAlpha(10, 10, 10, 50)
-        })  
+        })
         const r15 = mathutils.radians(15)
         const sz = Math.trunc((this._R[1] - rInner) * 0.6)
         const zodiacFont = this._paper.font('zodiac')
@@ -321,8 +326,8 @@ class StandardWheel extends Wheel {
             const deg = i * 30
             const ang = mathutils.radians(deg)
             this.drawRay(
-                ang, this._R[1], this._R[2], 
-                gd.trueColorAlpha(10, 10, 10, 50), 
+                ang, this._R[1], this._R[2],
+                gd.trueColorAlpha(10, 10, 10, 50),
                 { 'thickness': 2 }
             )
             this._drawZodiacScale(deg, rInner, this._R[2])
@@ -350,7 +355,7 @@ class StandardWheel extends Wheel {
             textColor
         )
         const [z, d, m] = mathutils.zdms(pos.x)
-        
+
         // degrees
         this._paper.drawText(
             this._paper.pol2rect(a, r[1]),
@@ -371,7 +376,7 @@ class StandardWheel extends Wheel {
             sprintf('%02d', m),
             regFont,
             h2,
-            textColor)        
+            textColor)
 
         const motion = this.model.chart.planets[pos.name].motion
         if (motion < 0) {
@@ -380,7 +385,7 @@ class StandardWheel extends Wheel {
                 RETRO_SYMBOL,
                 planetFont,
                 h2,
-                textColor)   
+                textColor)
         }
     }
 
@@ -410,6 +415,24 @@ class StandardWheel extends Wheel {
 
     }
 
+    _drawAspect(pos, asp) {
+        const pt0 = this.lonToPoint(mathutils.radians(pos.x), this._R[3])
+        const pt1 = this.lonToPoint(this.model.chart.planets[asp.target].coords.x, this._R[3])
+
+        const attr = {}
+        switch(asp.aspect.typeFlag) {
+            case aspects.MAJOR:
+                attr.thickness = 2
+                break
+            case aspects.MINOR:
+                attr.dashed = true
+                attr.thickness = 1
+                break
+            case aspects.KEPLER:
+                attr.thickness = 1
+        }
+        this._paper.drawLine(pt0, pt1, INFLUENCE_COLORS[asp.aspect.influence], attr)
+    }
 
     _drawPlanets() {
         const scaleH = (this._R[1] - this._R[2]) / 10
@@ -420,12 +443,12 @@ class StandardWheel extends Wheel {
         const textHeight = Math.trunc(v / 5 * PLANET_FONT_SCALE_RATIO)
         const plaFont = this.paper.font('planets')
 
-        const r = [ 
+        const r = [
             Math.trunc(rOut - textHeight / 2),
             0,
             0,
             0,
-            0 
+            0
         ]
         let h = Math.trunc((Math.trunc(rInn + textHeight / 2) - r[0]) / 4)
         r[1] = Math.trunc(r[0] + h + h / 2)
@@ -433,24 +456,15 @@ class StandardWheel extends Wheel {
         r[3] = r[2] + h
         r[4] = r[3] + h
 
+        // ---- For debugging
         // for(let radius of r) {
         //     this._paper.drawCircle(radius, {
         //         stroke: gd.trueColorAlpha(38, 115, 38, 0),
-        //     })             
+        //     })
         // }
 
-        // const coeffs = [0.7, 0.6, 0.5, 0.6]
-        // for(let i = 0; i < coeffs.length; i++) {
-        //     r.push(Math.trunc(r[i] - textHeight * coeffs[i]))
-        // }
-
-        // Measure width of Mars symbol, which is the widest.
-        //const box = this.paper.image.stringFTBBox(0, plaFont, textHeight, 0, 0, 0, 'T' )
-        //const w = Math.abs( box[4] - box[6] )
-        //const h = Math.abs( box[1] - box[7] )
-        //const textWidth = Math.trunc(w * 3.0)
         const lastAspectIdx = ORDINALS['Pluto']
-
+        const chartPlanets = this.model.chart.planets
         for (let st of this.model.planetGroups) {
             const fakeX = this._distributePlanets(st, r[0], textHeight)
             for(let i = 0; i < st.length; i++) {
@@ -458,49 +472,47 @@ class StandardWheel extends Wheel {
                 this._drawPlanet(pos, fakeX[i], r, plaFont, textHeight)
                 // mark
                 this.drawRay(
-                    mathutils.radians(pos.x), rMark, this._R[2], 
-                    gd.trueColorAlpha(10, 10, 10, 20), 
+                    mathutils.radians(pos.x), rMark, this._R[2],
+                    gd.trueColorAlpha(10, 10, 10, 20),
                     { 'thickness': 3 }
                 )
-                /*
                 // aspects
                 const sourceIdx = ORDINALS[pos.name]
-                const aspects = this.wheel.chart.planets[pos.name].aspects
+                const aspects = chartPlanets[pos.name].aspects
                 //console.log('aspects: %s', JSON.stringify(aspects, null, 2))
                 for(let asp of aspects) {
                     const targetIdx = ORDINALS[asp.target]
                     if (sourceIdx < targetIdx
                     &&  asp.aspect.value !== 0
-                    &&  this.wheel.aspectFlags & asp.aspect.typeFlag
+                    &&  this.model.aspectFlags & asp.aspect.typeFlag
                     &&  sourceIdx <= lastAspectIdx
                     &&  targetIdx <= lastAspectIdx)
                     {
-                        this.drawAspect(pos, asp)
+                        this._drawAspect(pos, asp)
                     }
                 }
-                */
             }
         }
     }
 
 
     paint() {
-        //this._paper.image.alphaBlending(1)       
+        //this._paper.image.alphaBlending(1)
         this._paper.clear()
         this._paper.drawCircle(this._R[1], {
             thickness: 4,
             stroke: gd.trueColorAlpha(0, 0, 0, 80),
             fill: gd.trueColorAlpha(255, 245, 230, 20)
-        })     
+        })
         this._paper.drawCircle(this._R[2], {
             fill: gd.trueColorAlpha(255, 255, 255, 63)
-        }) 
-        this._drawHouses()      
+        })
+        this._drawHouses()
         this._paper.drawCircle(this._R[3], {
             thickness: 4,
             stroke: gd.trueColorAlpha(0, 0, 0, 80),
             fill: gd.trueColorAlpha(255, 255, 255, 20)
-        }) 
+        })
         this._drawZodiac()
         this._drawPlanets()
     }
@@ -549,8 +561,8 @@ const self = module.exports = {
             }
             try {
                 const model = new WheelModel(chart, aspectFlags)
-                const paper = new Paper(img)    
-                const wheel = self.createWheel(model, paper, style)                
+                const paper = new Paper(img)
+                const wheel = self.createWheel(model, paper, style)
                 wheel.paint()
                 callback(null, img)
             } catch (err1) {
