@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path')
 const gd = require('node-gd')
 const assert = require('chai').assert
-const { Paper, WheelModel, createWheel, paintWheel } = require('../src/graphics.js')
+const { Paper, WheelModel, createWheel, paintAndSaveWheel } = require('../src/graphics.js')
 const { BaseChart } = require('../src/chart.js')
 
 describe('Paper', _ => {
@@ -13,7 +13,7 @@ describe('Paper', _ => {
 
     before( () => {
         img = gd.createTrueColorSync(100, 100)
-        paper = new Paper(img)    
+        paper = new Paper(img)
     })
 
     after( () => {
@@ -30,18 +30,18 @@ describe('Paper', _ => {
 
     it('Clearing', () => {
         paper.clear()
-    }) 
+    })
 
     for( let k of ['zodiac', 'planets', 'regular', 'bold']) {
         it(`"${k}" font`, () => {
             assert.isNotNull(paper.font(k))
         })
     }
-    
+
     it('pol2rect', () => {
         const coords = paper.pol2rect(0, 45)
         assert.deepEqual(coords, {x: 95, y: 50} );
-    })     
+    })
 
 })
 
@@ -71,17 +71,17 @@ describe('Wheel', _ => {
     let img, paper, wheel
     before( () => {
         img = gd.createTrueColorSync(100, 100)
-        paper = new Paper(img)    
+        paper = new Paper(img)
         wheel = createWheel(model, paper)
     })
 
     after( () => {
         img.destroy()
-    })    
+    })
 
-    it('Factory function', () => {      
+    it('Factory function', () => {
         assert.isDefined(wheel)
-    })    
+    })
 
     it('zodiacToScreenAngle', () => {
         assert.approximately(5.06424, wheel.zodiacToScreenAngle(0), 1E-4)
@@ -95,39 +95,19 @@ describe('Wheel', _ => {
     it('lonToPoint Y', () => {
         const point = wheel.lonToPoint(0, 100)
         assert.equal(-43, point.y)
-    })     
+    })
 
 })
 
-describe('paintWheel', _ => {
+
+describe('paintAndSaveWheel', _ => {
     const chart = new BaseChart({date: new Date(1965, 1, 1, 14, 46, 0)})
-    const imgFile = path.resolve('./wheel.png')
-
-    // it('Callback', () => {      
-    //     paintWheel(chart, (err, img) => {
-    //         if (err) {
-    //             assert.assert(false, err)
-    //         } else {
-    //             assert.isDefined(img)
-    //         }
-    //     })
-    // })      
-
-    it(`Saving image to ${imgFile}`, (done) => {      
-        paintWheel(chart, (err0, img) => {     
-            if (err0) {
-                assert.isOk(false, err0)
-                done()
-            } else {
-                img.savePng(imgFile, 0, (err1) => {
-                    if (err1) {
-                        assert.isOk(false, err1)
-                    } else {
-                        assert.isOk(fs.existsSync(imgFile), `file ${imgFile} not found`)
-                    }
-                    done()
-                })
-            }
-        }, [1500, 1500])
-    })       
+    it(`Saving chart wheel`, (done) => {
+        paintAndSaveWheel(chart).then( imgFile => {
+            assert.isOk(fs.existsSync(imgFile), `file ${imgFile} not found`)
+            done()
+        }).catch( err => {
+            assert.isOk(false, err)
+        })
+    })
 })

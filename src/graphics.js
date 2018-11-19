@@ -1,7 +1,12 @@
 'use strict';
 
 const { resolve } = require('path')
+const util = require('util')
 const gd = require('node-gd')
+const tmp = require('tmp')
+const tmpName = util.promisify(tmp.tmpName)
+const tempDir = require('temp-dir')
+const createTrueColor = util.promisify(gd.createTrueColor)
 const sprintf = require('sprintf-js').sprintf
 //const util = require('util')
 //const createImageAsync = util.promisify(gd.createTrueColor)
@@ -16,7 +21,6 @@ const ASC_SYMBOL = 'Z'
 const MC_SYMBOL = 'X'
 const RETRO_SYMBOL = '>'
 const TRIPL_COLORS = [0xDC143C, 0x8B4513, 0x3691b0, 0x191970]
-const TRIPL_OPACITIES = [0.7, 0.7, 1, 0.7]
 
 const INFLUENCE_COLORS = {
   Negative: 0x00008B, // DarkBlue
@@ -66,7 +70,11 @@ const ASPECT_SYMBOLS = {
 const STANDARD_WHEEL = Symbol.for('Standard')
 const CLASSIC_WHEEL = Symbol.for('Classic')
 const FONTS_PATH = `${__dirname}/../fonts`
-
+const DEFAULT_OPTIONS = {
+    size: [1000, 1000],
+    style: Symbol.for("Standard"),
+    aspectFlags: aspects.MAJOR,
+}
 
 // Provides essential data for wheel painting
 class WheelModel {
@@ -526,7 +534,21 @@ class ClassicWheel extends Wheel {
     }
 }
 
-
+function processOptions(options) {
+    if (!options) {
+        options = {}
+    }
+    if (!options.size) {
+        options.size = DEFAULT_OPTIONS.size
+    }
+    if (!options.aspectFlags) {
+        options.aspectFlags = DEFAULT_OPTIONS.aspectFlags
+    }
+    if (!options.style) {
+        options.style = DEFAULT_OPTIONS.style
+    }
+    return options
+}
 
 
 const self = module.exports = {
@@ -551,25 +573,38 @@ const self = module.exports = {
         }
     },
 
-    // Handy high-level function for drawing a chart.
-    paintWheel(chart, callback, size=[1000, 1000], style=Symbol.for("Standard"), aspectFlags=aspects.MAJOR) {
-        const [w, h] = size
-        gd.createTrueColor(w, h, (err0, img) => {
-            if (err0) {
-                callback(err, null)
-                return
-            }
-            try {
-                const model = new WheelModel(chart, aspectFlags)
-                const paper = new Paper(img)
-                const wheel = self.createWheel(model, paper, style)
-                wheel.paint()
-                callback(null, img)
-            } catch (err1) {
-                callback(err1, null)
-            } finally {
-                img.destroy()
-            }
+    // size=[1000, 1000], style=Symbol.for("Standard"), aspectFlags=aspects.MAJOR
+    // Handy high-level function for drawing a chart asynchroneously and saving result
+    // to a temporary file.
+
+    paintAndSaveWheel(chart, options) {
+        const opts = processOptions(options)
+        const [w, h] = opts.size
+
+        return new Promise((resolve, reject) => {
+            createTrueColor(w, h).then(img => {
+                try {
+                    const model = new WheelModel(chart, opts.aspectFlags)
+                    const paper = new Paper(img)
+                    const wheel = self.createWheel(model, paper, opts.style)
+                    wheel.paint()
+                    tmpName({ template: `${tempDir}/XXXXXXX.png` }).then(fileName => {
+                        img.savePng(fileName, 0, err => {
+                            if (err) {
+                                reject(err)
+                            } else {
+                                resolve(fileName)
+                            }
+                            img.destroy()
+                        })
+                    })
+                } catch (err) {
+                    img.destroy()
+                    reject(err)
+                }
+            }).catch( err => {
+                reject(err)
+            })
         })
     }
 }

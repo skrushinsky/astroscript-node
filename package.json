@@ -24,6 +24,8 @@
   "dependencies": {
     "node-gd": "^1.5.4",
     "simple-hex-to-rgb": "^1.0.0",
-    "sprintf-js": "^1.1.1"
+    "sprintf-js": "^1.1.1",
+    "temp-dir": "^1.0.0",
+    "tmp": "0.0.33"
   }
 }
