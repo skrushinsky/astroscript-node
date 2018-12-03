@@ -16,6 +16,7 @@ const mathutils = require('./mathutils.js')
 const points = require('./points.js')
 const timeutils = require('./timeutils.js')
 const graphics = require('./graphics.js')
+const obliquity= require('./ephem/obliquity')
 
 module.exports = {
     aspects,
@@ -26,5 +27,6 @@ module.exports = {
     mathutils,
     points,
     timeutils,
+    obliquity,
     graphics
 }
