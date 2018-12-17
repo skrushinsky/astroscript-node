@@ -165,10 +165,10 @@ const self = module.exports = {
 						this._cusps = f()
 						break
 					case 'EqualAsc':
-						this._cusps = f(asc)
+						this._cusps = f(this.points['Ascendant'])
 						break
 					case 'EqualMc':
-						this._cusps = f(mc, 9)
+						this._cusps = f(this.points['Midheaven'], 9)
 						break
 					default:
 						console.error('Unknown house system: %s', sysname)
