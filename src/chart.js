@@ -23,7 +23,7 @@ const DEFAULT_OPT = {
 
 const self = module.exports = {
 
-	POINTS: ['Ascendant', 'Midheaven', 'Vertex', 'EastPoint'], 
+	POINTS: ['Ascendant', 'Midheaven', 'Vertex', 'EastPoint'],
 
 	BaseChart: class {
 		constructor({
@@ -142,7 +142,8 @@ const self = module.exports = {
 		get cusps() {
 			if (this._cusps === null) {
 				const sysname = this.options.houses
-				const f = houses.housesFunction(Symbol.for(sysname))
+				const s = (sysname === 'EqualAsc' || sysname === 'EqualMc') ? 'Equal' : sysname
+				const f = houses.housesFunction(Symbol.for(s))
 				const ramc = radians(this.lst * 15)
 				const eps = this.ephemeris.obliquity
 
