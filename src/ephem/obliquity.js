@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 /************************************************************************************
  Obliquity of ecliptic.
 
@@ -12,8 +12,8 @@ module.exports = {
     // calculate obliquity of ecliptic in degrees.
     // Without the second argument, return mean obliquity.
     obliquity: function(djd, deps=0.0) {
-        const t = djd / 36525.0
-        const c = (((-0.00181 * t) + 0.0059) * t + 46.845) * t
-        return 23.45229444 - (c / 3600) + deps
+        const t = djd / 36525.0;
+        const c = (((-0.00181 * t) + 0.0059) * t + 46.845) * t;
+        return 23.45229444 - (c / 3600) + deps;
     }
-}
+};

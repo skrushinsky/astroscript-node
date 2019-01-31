@@ -1,113 +1,112 @@
-'use strict'
+'use strict';
 
-const fs = require('fs')
-const path = require('path')
-const gd = require('node-gd')
-const assert = require('chai').assert
-const { Paper, WheelModel, createWheel, paintAndSaveWheel } = require('../src/graphics.js')
-const { BaseChart } = require('../src/chart.js')
+const fs = require('fs');
+const gd = require('node-gd');
 
-describe('Paper', _ => {
+const assert = require('chai').assert;
+const { Paper, WheelModel, createWheel, paintAndSaveWheel } = require('../src/graphics.js');
+const { BaseChart } = require('../src/chart.js');
 
-    let img, paper
+describe('Paper', () => {
+
+    let img, paper;
 
     before( () => {
-        img = gd.createTrueColorSync(100, 100)
-        paper = new Paper(img)
-    })
+        img = gd.createTrueColorSync(100, 100);
+        paper = new Paper(img);
+    });
 
     after( () => {
-        img.destroy()
-    })
+        img.destroy();
+    });
 
     it('Constructor', () => {
-        assert.isDefined(paper)
-    })
+        assert.isDefined(paper);
+    });
 
     it('Center', () => {
         assert.deepEqual(paper.center, {x: 50, y: 50} );
-    })
+    });
 
     it('Clearing', () => {
-        paper.clear()
-    })
+        paper.clear();
+    });
 
     for( let k of ['zodiac', 'planets', 'regular', 'bold']) {
         it(`"${k}" font`, () => {
-            assert.isNotNull(paper.font(k))
-        })
+            assert.isNotNull(paper.font(k));
+        });
     }
 
     it('pol2rect', () => {
-        const coords = paper.pol2rect(0, 45)
+        const coords = paper.pol2rect(0, 45);
         assert.deepEqual(coords, {x: 95, y: 50} );
-    })
+    });
 
-})
+});
 
 
-describe('WheelModel', _ => {
-    const chart = new BaseChart({date: new Date(1965, 1, 1, 14, 46, 0)})
-    const model = new WheelModel(chart)
+describe('WheelModel', () => {
+    const chart = new BaseChart({date: new Date(1965, 1, 1, 14, 46, 0)});
+    const model = new WheelModel(chart);
 
     it('Default aspect flags', () => {
-        assert.equal(model.aspectFlags, 0x1)
-    })
+        assert.equal(model.aspectFlags, 0x1);
+    });
 
     it('Planet groups', () => {
-        assert.equal(model.planetGroups.length, 8)
-    })
+        assert.equal(model.planetGroups.length, 8);
+    });
 
     it('1-st cusp', () => {
-        const x = model.firstCusp
-        assert.approximately(model.firstCusp, 1.922656, 1E-4)
-    })
-})
+        assert.approximately(model.firstCusp, 1.922656, 1E-4);
+    });
+});
 
-describe('Wheel', _ => {
-    const chart = new BaseChart({date: new Date(1965, 1, 1, 14, 46, 0)})
-    const model = new WheelModel(chart)
+describe('Wheel', () => {
+    const chart = new BaseChart({date: new Date(1965, 1, 1, 14, 46, 0)});
+    const model = new WheelModel(chart);
 
-    let img, paper, wheel
+    let img, paper, wheel;
     before( () => {
-        img = gd.createTrueColorSync(100, 100)
-        paper = new Paper(img)
-        wheel = createWheel(model, paper)
-    })
+        img = gd.createTrueColorSync(100, 100);
+        paper = new Paper(img);
+        wheel = createWheel(model, paper);
+    });
 
     after( () => {
-        img.destroy()
-    })
+        img.destroy();
+    });
 
     it('Factory function', () => {
-        assert.isDefined(wheel)
-    })
+        assert.isDefined(wheel);
+    });
 
     it('zodiacToScreenAngle', () => {
-        assert.approximately(5.06424, wheel.zodiacToScreenAngle(0), 1E-4)
-    })
+        assert.approximately(5.06424, wheel.zodiacToScreenAngle(0), 1E-4);
+    });
 
     it('lonToPoint X', () => {
-        const point = wheel.lonToPoint(0, 100)
-        assert.equal(84, point.x)
-    })
+        const point = wheel.lonToPoint(0, 100);
+        assert.equal(84, point.x);
+    });
 
     it('lonToPoint Y', () => {
-        const point = wheel.lonToPoint(0, 100)
-        assert.equal(-43, point.y)
-    })
+        const point = wheel.lonToPoint(0, 100);
+        assert.equal(-43, point.y);
+    });
+});
 
-})
 
-
-describe('paintAndSaveWheel', _ => {
-    const chart = new BaseChart({date: new Date(1965, 1, 1, 14, 46, 0)})
-    it(`Saving chart wheel`, (done) => {
+describe('paintAndSaveWheel', () => {
+    const chart = new BaseChart({date: new Date(1965, 1, 1, 14, 46, 0)});
+    it('Saving chart wheel', (done) => {
         paintAndSaveWheel(chart).then( imgFile => {
-            assert.isOk(fs.existsSync(imgFile), `file ${imgFile} not found`)
-            done()
+            assert.isOk(fs.existsSync(imgFile), `file ${imgFile} not found`);
+            done();
         }).catch( err => {
-            assert.isOk(false, err)
-        })
-    })
-})
+            assert.isOk(false, err);
+            done();
+        });
+    });
+});

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const assert = require('chai').assert;
 const mathutils = require('../src/mathutils.js');
@@ -42,53 +42,53 @@ const EQUHOR = [
     }
 ];
 
-describe('Equatorial -> Ecliptical', _ => {
+describe('Equatorial -> Ecliptical', () => {
     for (let c of EQUECL) {
         const coo = coco.equ2ecl(radians(c.ra), radians(c.de), radians(c.ob));
-        it(`longitude`, () => {
-          assert.approximately(degrees(coo[0]), c.lo, 1E-4);
+        it('longitude', () => {
+            assert.approximately(degrees(coo[0]), c.lo, 1E-4);
         });
-        it(`latitude`, () => {
-          assert.approximately(degrees(coo[1]), c.la, 1E-4);
+        it('latitude', () => {
+            assert.approximately(degrees(coo[1]), c.la, 1E-4);
         });
     }
 });
 
-describe('Ecliptical-> Equatorial', _ => {
+describe('Ecliptical-> Equatorial', () => {
     for (let c of EQUECL) {
         const coo = coco.ecl2equ(radians(c.lo), radians(c.la), radians(c.ob));
-        it(`right ascension`, () => {
-          assert.approximately(degrees(coo[0]), c.ra, 1E-4);
+        it('right ascension', () => {
+            assert.approximately(degrees(coo[0]), c.ra, 1E-4);
         });
-        it(`declination`, () => {
-          assert.approximately(degrees(coo[1]), c.de, 1E-4);
+        it('declination', () => {
+            assert.approximately(degrees(coo[1]), c.de, 1E-4);
         });
     }
 });
 
 
-describe('Equatorial -> Horizontal', _ => {
+describe('Equatorial -> Horizontal', () => {
     for (let c of EQUHOR) {
         const coo = coco.equ2hor(radians(c.ha * 15), radians(c.de), radians(c.gl));
-        it(`azimuth`, () => {
-          assert.approximately(degrees(coo[0]), c.az, 1E-4);
+        it('azimuth', () => {
+            assert.approximately(degrees(coo[0]), c.az, 1E-4);
         });
-        it(`altitude`, () => {
-          assert.approximately(degrees(coo[1]), c.al, 1E-4);
+        it('altitude', () => {
+            assert.approximately(degrees(coo[1]), c.al, 1E-4);
         });
     }
 });
 
 
 
-describe('Horizontal => Equatorial', _ => {
+describe('Horizontal => Equatorial', () => {
     for (let c of EQUHOR) {
         const coo = coco.hor2equ(radians(c.az), radians(c.al), radians(c.gl));
-        it(`hour angle`, () => {
-          assert.approximately(degrees(coo[0]) / 15, c.ha, 1E-4);
+        it('hour angle', () => {
+            assert.approximately(degrees(coo[0]) / 15, c.ha, 1E-4);
         });
-        it(`declination`, () => {
-          assert.approximately(degrees(coo[1]), c.de, 1E-4);
+        it('declination', () => {
+            assert.approximately(degrees(coo[1]), c.de, 1E-4);
         });
     }
 });

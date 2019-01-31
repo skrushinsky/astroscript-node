@@ -4,10 +4,10 @@ const DLA_DELTA = 1e-7; // precision for Kepler equation
 
 const self = module.exports = {
 
-    // Solve Kepler equation to calculate ea, the eccentric anomaly, 
+    // Solve Kepler equation to calculate ea, the eccentric anomaly,
     // in elliptical motion given  s (< 1), the eccentricity,
-    // and  ma, mean anomaly.
-    kepler: function(s, m, ea=null, pass=0) {
+    // and ma, mean anomaly.
+    kepler: function(s, m, ea=null) {
         if (ea === null ) {
             ea = m;
         }
@@ -16,7 +16,7 @@ const self = module.exports = {
             return ea;
         }
         dla = dla / (1 - (s * Math.cos(ea)));
-        return self.kepler(s, m, ea - dla, pass + 1);
+        return self.kepler(s, m, ea - dla);
     },
 
     // Given s, eccentricity, and ea, eccentric anomaly, find true anomaly.

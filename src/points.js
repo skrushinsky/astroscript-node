@@ -27,10 +27,10 @@ const self = module.exports = {
     midheaven: function(ramc, eps) {
         let x = atan2(tan(ramc), cos(eps));
         if (x < 0) {
-            x += Math.PI
+            x += Math.PI;
         }
         if (sin(ramc) < 0) {
-            x += Math.PI
+            x += Math.PI;
         }
         return reduceRad(x);
     },

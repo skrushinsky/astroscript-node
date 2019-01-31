@@ -7,16 +7,16 @@ This module wrapps functions exported by other modules.
 
 ************************************************************************************/
 
-const aspects = require('./aspects.js')
-const chart = require('./chart.js')
-const coco = require('./coco.js')
-const ephemeris = require('./ephemeris.js')
-const houses = require('./houses.js')
-const mathutils = require('./mathutils.js')
-const points = require('./points.js')
-const timeutils = require('./timeutils.js')
-const graphics = require('./graphics.js')
-const obliquity= require('./ephem/obliquity')
+const aspects = require('./aspects.js');
+const chart = require('./chart.js');
+const coco = require('./coco.js');
+const ephemeris = require('./ephemeris.js');
+const houses = require('./houses.js');
+const mathutils = require('./mathutils.js');
+const points = require('./points.js');
+const timeutils = require('./timeutils.js');
+const graphics = require('./graphics.js');
+const obliquity= require('./ephem/obliquity');
 
 module.exports = {
     aspects,
@@ -29,4 +29,4 @@ module.exports = {
     timeutils,
     obliquity,
     graphics
-}
+};
