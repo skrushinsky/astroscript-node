@@ -239,8 +239,7 @@ class Equal {
 }
 
 module.exports = {
-    QUADRANT_SYSTEMS: new Set([HOUSES_PLACIDUS, HOUSES_KOCH, HOUSES_REGIOMONTANUS,
-                               HOUSES_CAMPANUS, HOUSES_TOPOCENTRIC]),
+    QUADRANT_SYSTEMS: new Set([HOUSES_PLACIDUS, HOUSES_KOCH, HOUSES_REGIOMONTANUS, HOUSES_CAMPANUS, HOUSES_TOPOCENTRIC]),
 
 
     // Given a House System symbol, return function for calculating cusps.
@@ -267,36 +266,36 @@ module.exports = {
     // All angles are in radians.
     housesFunction(hsystem) {
         switch(hsystem) {
-            case HOUSES_PLACIDUS:
-                return function(ramc, eps, theta, asc, mc) {
-                    return new Placidus(ramc, eps, theta, asc, mc).cusps;
-                };
-            case HOUSES_KOCH:
-                return function(ramc, eps, theta, asc, mc) {
-                    return new Koch(ramc, eps, theta, asc, mc).cusps;
-                };
-            case HOUSES_REGIOMONTANUS:
-                return function(ramc, eps, theta, asc, mc) {
-                    return new RegioMontanus(ramc, eps, theta, asc, mc).cusps;
-                };
-            case HOUSES_CAMPANUS:
-                return function(ramc, eps, theta, asc, mc) {
-                    return new Campanus(ramc, eps, theta, asc, mc).cusps;
-                };
-            case HOUSES_TOPOCENTRIC:
-                return function(ramc, eps, theta, asc, mc) {
-                    return new Topocentric(ramc, eps, theta, asc, mc).cusps;
-                };
-            case HOUSES_MORINUS:
-                return function(ramc, eps) {
-                    return new Morinus(ramc, eps).cusps;
-                };
-            case HOUSES_EQUAL:
-                return function(startx=0, startn=0) {
-                    return new Equal(startx, startn).cusps;
-                };
-            default:
-                throw new Error(`Unknown houses system: "${String(hsystem)}"`);
+        case HOUSES_PLACIDUS:
+            return function(ramc, eps, theta, asc, mc) {
+                return new Placidus(ramc, eps, theta, asc, mc).cusps;
+            };
+        case HOUSES_KOCH:
+            return function(ramc, eps, theta, asc, mc) {
+                return new Koch(ramc, eps, theta, asc, mc).cusps;
+            };
+        case HOUSES_REGIOMONTANUS:
+            return function(ramc, eps, theta, asc, mc) {
+                return new RegioMontanus(ramc, eps, theta, asc, mc).cusps;
+            };
+        case HOUSES_CAMPANUS:
+            return function(ramc, eps, theta, asc, mc) {
+                return new Campanus(ramc, eps, theta, asc, mc).cusps;
+            };
+        case HOUSES_TOPOCENTRIC:
+            return function(ramc, eps, theta, asc, mc) {
+                return new Topocentric(ramc, eps, theta, asc, mc).cusps;
+            };
+        case HOUSES_MORINUS:
+            return function(ramc, eps) {
+                return new Morinus(ramc, eps).cusps;
+            };
+        case HOUSES_EQUAL:
+            return function(startx=0, startn=0) {
+                return new Equal(startx, startn).cusps;
+            };
+        default:
+            throw new Error(`Unknown houses system: "${String(hsystem)}"`);
         }
     },
 

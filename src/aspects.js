@@ -10,40 +10,40 @@ const { diffAngleDeg } = require('./mathutils.js');
 
 class Aspect {
     constructor(name, briefName, value, influence, typeFlag) {
-        this.name = name
-        this.briefName = briefName
-        this.value = value
-        this.influence = influence
-        this.typeFlag = typeFlag
+        this.name = name;
+        this.briefName = briefName;
+        this.value = value;
+        this.influence = influence;
+        this.typeFlag = typeFlag;
     }
 }
 
-const MAJOR = 0x1
-const MINOR = MAJOR << 1
-const KEPLER = MAJOR << 2
-const ALL = MAJOR | MINOR | KEPLER
+const MAJOR = 0x1;
+const MINOR = MAJOR << 1;
+const KEPLER = MAJOR << 2;
+const ALL = MAJOR | MINOR | KEPLER;
 
-const CONJUNCTION = new Aspect("Conjunction", "cnj", 0, 'Neutral', MAJOR)
-const VIGINTILE = new Aspect("Vigintile", "vgt", 18, 'Neutral', KEPLER)
-const QUINDECILE = new Aspect("Quindecile", "qdc", 24, 'Neutral', KEPLER)
-const SEMISEXTILE = new Aspect("Semisextile", "ssx", 30, 'Positive', MINOR)
-const DECILE = new Aspect("Decile", "dcl", 36, 'Neutral', KEPLER)
-const SEXTILE = new Aspect("Sextile", "sxt", 60, 'Positive', MAJOR)
-const SEMISQUARE = new Aspect("Semisquare", "ssq", 45, 'Negative', MINOR)
-const QUINTILE = new Aspect("Quintile", "qui", 72, 'Neutral', KEPLER)
-const SQUARE = new Aspect("Square", "sqr", 90, 'Negative', MAJOR)
-const TRIDECILE = new Aspect("Tridecile", "tdc", 108, 'Positive', MINOR)
-const TRINE = new Aspect("Trine", "tri", 120, 'Positive', MAJOR)
-const SESQUIQUADRATE = new Aspect("Sesquiquadrate", "sqq", 135, 'Negative', MINOR)
-const BIQUINTILE = new Aspect("Biquintile", "bqu", 144, 'Neutral', KEPLER)
-const QUINCUNX = new Aspect("Quincunx", "qcx", 150, 'Negative', MINOR)
-const OPPOSITION = new Aspect("Opposition", "opp", 180, 'Negative', MAJOR)
+const CONJUNCTION = new Aspect('Conjunction', 'cnj', 0, 'Neutral', MAJOR);
+const VIGINTILE = new Aspect('Vigintile', 'vgt', 18, 'Neutral', KEPLER);
+const QUINDECILE = new Aspect('Quindecile', 'qdc', 24, 'Neutral', KEPLER);
+const SEMISEXTILE = new Aspect('Semisextile', 'ssx', 30, 'Positive', MINOR);
+const DECILE = new Aspect('Decile', 'dcl', 36, 'Neutral', KEPLER);
+const SEXTILE = new Aspect('Sextile', 'sxt', 60, 'Positive', MAJOR);
+const SEMISQUARE = new Aspect('Semisquare', 'ssq', 45, 'Negative', MINOR);
+const QUINTILE = new Aspect('Quintile', 'qui', 72, 'Neutral', KEPLER);
+const SQUARE = new Aspect('Square', 'sqr', 90, 'Negative', MAJOR);
+const TRIDECILE = new Aspect('Tridecile', 'tdc', 108, 'Positive', MINOR);
+const TRINE = new Aspect('Trine', 'tri', 120, 'Positive', MAJOR);
+const SESQUIQUADRATE = new Aspect('Sesquiquadrate', 'sqq', 135, 'Negative', MINOR);
+const BIQUINTILE = new Aspect('Biquintile', 'bqu', 144, 'Neutral', KEPLER);
+const QUINCUNX = new Aspect('Quincunx', 'qcx', 150, 'Negative', MINOR);
+const OPPOSITION = new Aspect('Opposition', 'opp', 180, 'Negative', MAJOR);
 
 const ASPECTS = new Set([
     CONJUNCTION, VIGINTILE, QUINDECILE, SEMISEXTILE, DECILE, SEXTILE,
     SEMISQUARE, QUINTILE, SQUARE, TRIDECILE, TRINE,
     SESQUIQUADRATE, BIQUINTILE, QUINCUNX, OPPOSITION
-])
+]);
 
 
 class OrbsMethod {
@@ -51,15 +51,15 @@ class OrbsMethod {
     // aspect. Subclasses implement 'is_aspect' method which detects aspect
     // using specific rules.
     constructor(name) {
-        this._name = name
+        this._name = name;
         if (this.isAspect === undefined) {
-            // or maybe test typeof this.method === "function"
-            throw new TypeError("Must override isAspect method");
+            // or maybe test typeof this.method === 'function'
+            throw new TypeError('Must override isAspect method');
         }
     }
 
     get name() {
-        return this._name
+        return this._name;
     }
 }
 
@@ -73,7 +73,7 @@ class Dariot extends OrbsMethod {
     // The method does not take into account the nature of aspects.
 
     static get DEFAULT_MOIETY() {
-        return 4.0
+        return 4.0;
     }
 
     static get MOIETIES() {
@@ -88,28 +88,28 @@ class Dariot extends OrbsMethod {
             Uranus: 6.0,
             Neptune: 6.0,
             Pluto: 5.0
-        }
+        };
     }
 
     constructor() {
-        super('Classic (Claude Dariot)')
+        super('Classic (Claude Dariot)');
     }
 
     getMoiety(name) {
-        return name in Dariot.MOIETIES ? Dariot.MOIETIES[name] : Dariot.DEFAULT_MOIETY
+        return name in Dariot.MOIETIES ? Dariot.MOIETIES[name] : Dariot.DEFAULT_MOIETY;
     }
 
     calculateOrb(srcName, dstName) {
         // Calculate mean orb for planets src and dst,
-        const a = this.getMoiety(srcName)
-        const b = this.getMoiety(dstName)
-        return (a + b) / 2.0
+        const a = this.getMoiety(srcName);
+        const b = this.getMoiety(dstName);
+        return (a + b) / 2.0;
     }
 
     isAspect(srcName, dstName, asp, arc) {
-        const delta = Math.abs(arc - asp.value)
-        const orb = this.calculateOrb(srcName, dstName)
-        return delta <= orb
+        const delta = Math.abs(arc - asp.value);
+        const orb = this.calculateOrb(srcName, dstName);
+        return delta <= orb;
     }
 
 }
@@ -136,17 +136,17 @@ class DeVore extends OrbsMethod {
             Biquintile: [143.5, 144.5],
             Quincunx: [148.0, 151.0],
             Opposition: [174, 186]
-        }
+        };
 
     }
 
     constructor() {
-        super('By Aspect (Nicholas deVore)')
+        super('By Aspect (Nicholas deVore)');
     }
 
     isAspect(src, dst, asp, arc) {
-        const aspRange = DeVore.RANGES[asp.name]
-        return aspRange[0] <= arc && aspRange[1] >= arc
+        const aspRange = DeVore.RANGES[asp.name];
+        return aspRange[0] <= arc && aspRange[1] >= arc;
     }
 }
 
@@ -156,22 +156,22 @@ class ClassicWithAspectRatio extends OrbsMethod {
     // special coefficient: by default, 0.6 (60%) for minor and 0.4 (40%) for keplerian.
 
     constructor(minorCoeff = 0.6, keplerCoeff = 0.4) {
-        super('Classic with regard to Aspect type')
-        this._minorCoeff = minorCoeff
-        this._keplerCoeff = keplerCoeff
+        super('Classic with regard to Aspect type');
+        this._minorCoeff = minorCoeff;
+        this._keplerCoeff = keplerCoeff;
 
-        this._classic = new Dariot()
+        this._classic = new Dariot();
     }
 
     isAspect(src, dst, asp, arc) {
-        let orb = this._classic.calculateOrb(src, dst)
+        let orb = this._classic.calculateOrb(src, dst);
         if (asp.type === MINOR) {
-            orb *= this._minorCoeff
+            orb *= this._minorCoeff;
         } else if (asp.type === KEPLER) {
-            orb *= this._keplerCoeff
+            orb *= this._keplerCoeff;
         }
-        const delta = Math.abs(arc - asp.value)
-        return delta <= orb
+        const delta = Math.abs(arc - asp.value);
+        return delta <= orb;
     }
 }
 
@@ -185,25 +185,25 @@ class ClassicWithAspectRatio extends OrbsMethod {
 // typeFlags: Integer, a combination of MAJOR, MINOR and KEPLER constants
 //
 function findClosest(sourceName, targetName, arc, orbsMethod, typeFlags) {
-    let closest = null
+    let closest = null;
     for (let asp of ASPECTS) {
         if (typeFlags & asp.typeFlag) {
             if (orbsMethod.isAspect(sourceName, targetName, asp, arc)) {
-                const delta = Math.abs(asp.value - arc)
+                const delta = Math.abs(asp.value - arc);
                 if (closest === null || closest.delta > delta) {
                     closest = {
                         aspect: asp,
                         delta: delta
-                    }
+                    };
                 }
             }
         }
     }
-    return closest
+    return closest;
 }
 
 
-const self = module.exports = {
+module.exports = {
     MAJOR, MINOR, KEPLER, ALL,
     Dariot, DeVore, ClassicWithAspectRatio,
 
@@ -221,21 +221,21 @@ const self = module.exports = {
     // delta: difference between actual distance and exact aspect value
     * iterAspects(source, targets, orbsMethod, typeFlags=ALL) {
         for (let target of targets) {
-            let arc = Math.abs(source.x - target.x)
+            let arc = Math.abs(source.x - target.x);
             if (arc > 180) {
-                arc = 360 - arc
+                arc = 360 - arc;
             }
             if (arc < 0) {
-                arc += 360
+                arc += 360;
             }
-            const closest = findClosest(source.name, target.name, arc, orbsMethod, typeFlags)
+            const closest = findClosest(source.name, target.name, arc, orbsMethod, typeFlags);
             if (closest !== null) {
                 yield {
                     target: target.name,
                     aspect: closest.aspect,
                     arc: arc,
                     delta: closest.delta
-                }
+                };
             }
         }
     },
@@ -245,30 +245,29 @@ const self = module.exports = {
     // Technicaly that means partitioning of planetary positions with regard to their angular
     // distances.
     * iterStelliums(positions, gap=10.0) {
-        let sorted = positions.slice()
-        sorted.sort( (a, b) => {return a.x - b.x} )
-        const lastIndex = sorted.length - 1
-        let group = null
-        let index = 0
+        let sorted = positions.slice();
+        sorted.sort( (a, b) => {return a.x - b.x;} );
+        const lastIndex = sorted.length - 1;
+        let group = null;
+        let index = 0;
 
         while (index <= lastIndex) {
-            const curr = sorted[index]
+            const curr = sorted[index];
             if (null === group) {
-                group = new Array()
+                group = new Array();
             }
-            group.push(curr)
+            group.push(curr);
             if (index < lastIndex) {
-                const next = sorted[index+1]
+                const next = sorted[index+1];
                 if (diffAngleDeg(curr.x, next.x) > gap) {
-                    yield group
-                    group = null
+                    yield group;
+                    group = null;
                 }
             } else {
-                yield group
-                group = null
+                yield group;
+                group = null;
             }
-
-            index++
+            index++;
         }
     }
-}
+};

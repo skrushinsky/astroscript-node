@@ -6,19 +6,25 @@
 
 ************************************************************************************/
 
-const { radians, reduceRad, reduceDeg, frac360, polynome } = require ('../mathutils.js');
+const {
+    radians,
+    reduceRad,
+    reduceDeg,
+    frac360,
+    polynome
+} = require('../mathutils.js');
 
 const cos = Math.cos;
 const sin = Math.sin;
 
-const MER = Symbol.for ('Mercury');
-const VEN = Symbol.for ('Venus');
-const MAR = Symbol.for ('Mars');
-const JUP = Symbol.for ('Jupiter');
-const SAT = Symbol.for ('Saturn');
-const URA = Symbol.for ('Uranus');
-const NEP = Symbol.for ('Neptune');
-const PLU = Symbol.for ('Pluto');
+const MER = Symbol.for('Mercury');
+const VEN = Symbol.for('Venus');
+const MAR = Symbol.for('Mars');
+const JUP = Symbol.for('Jupiter');
+const SAT = Symbol.for('Saturn');
+const URA = Symbol.for('Uranus');
+const NEP = Symbol.for('Neptune');
+const PLU = Symbol.for('Pluto');
 
 function make_4(...terms) {
     let arr = [].concat(terms);
@@ -87,86 +93,86 @@ class Orbit {
 function buildOrbit(id) {
     let oe = {}; // orbital elements
     switch (id) {
-        case MER:
-            oe.ML = make_4(178.179078, 415.2057519, 3.011e-4);
-            oe.PH = [75.899697, 1.5554889, 2.947e-4];
-            oe.EC = [2.0561421e-1, 2.046e-5, -3e-8];
-            oe.IN = [7.002881, 1.8608e-3, -1.83e-5];
-            oe.ND = [47.145944, 1.1852083, 1.739e-4];
-            oe.SA = 3.870986e-1;
-            oe.DI = 6.74;
-            oe.MG = -0.42;
-            break;
-        case VEN:
-            oe.ML = make_4(342.767053, 162.5533664, 3.097e-4);
-            oe.PH = [130.163833, 1.4080361, -9.764e-4];
-            oe.EC = [6.82069e-3, -4.774e-5, 9.1e-8];
-            oe.IN = [3.393631, 1.0058e-3, -1e-6];
-            oe.ND = [75.779647, 8.9985e-1, 4.1e-4];
-            oe.SA = 7.233316e-1;
-            oe.DI = 16.92;
-            oe.MG = -4.4;
-            break;
-        case MAR:
-            oe.ML = make_4(293.737334, 53.17137642, 3.107e-4);
-            oe.PH = [3.34218203e2, 1.8407584, 1.299e-4, -1.19e-6];
-            oe.EC = [9.33129e-2, 9.2064e-5, -7.7e-8];
-            oe.IN = [1.850333, -6.75e-4, 1.26e-5];
-            oe.ND = [48.786442, 7.709917e-1, -1.4e-6, -5.33e-6];
-            oe.SA = 1.5236883;
-            oe.DI = 9.36;
-            oe.MG = -1.52;
-            break;
-        case JUP:
-            oe.ML = make_4(238.049257, 8.434172183, 3.347e-4, -1.65e-6);
-            oe.PH = [1.2720972e1, 1.6099617, 1.05627e-3, -3.43e-6];
-            oe.EC = [4.833475e-2, 1.6418e-4, -4.676e-7, -1.7e-9];
-            oe.IN = [1.308736, -5.6961e-3, 3.9e-6];
-            oe.ND = [99.443414, 1.01053, 3.5222e-4, -8.51e-6];
-            oe.SA = 5.202561;
-            oe.DI = 196.74;
-            oe.MG = -9.4;
-            break;
-        case SAT:
-            oe.ML = make_4(266.564377, 3.398638567, 3.245e-4, -5.8e-6);
-            oe.PH = [9.1098214e1, 1.9584158, 8.2636e-4, 4.61e-6];
-            oe.EC = [5.589232e-2, -3.455e-4, -7.28e-7, 7.4e-10];
-            oe.IN = [2.492519, -3.9189e-3, -1.549e-5, 4e-8];
-            oe.ND = [112.790414, 8.731951e-1, -1.5218e-4, -5.31e-6];
-            oe.SA = 9.554747;
-            oe.DI = 165.6;
-            oe.MG = -8.88;
-            break;
-        case URA:
-            oe.ML = make_4(244.19747, 1.194065406, 3.16e-4, -6e-7);
-            oe.PH = [1.71548692e2, 1.4844328, 2.372e-4, -6.1e-7];
-            oe.EC = [4.63444e-2, -2.658e-5, 7.7e-8];
-            oe.IN = [7.72464e-1, 6.253e-4, 3.95e-5];
-            oe.ND = [73.477111, 4.986678e-1, 1.3117e-3];
-            oe.SA = 19.21814;
-            oe.DI = 65.8;
-            oe.MG = -7.19;
-            break;
-        case NEP:
-            oe.ML = make_4(84.457994, 6.107942056e-1, 3.205e-4, -6e-7);
-            oe.PH = [4.6727364e1, 1.4245744, 3.9082e-4, -6.05e-7];
-            oe.EC = [8.99704e-3, 6.33e-6, -2e-9];
-            oe.IN = [1.779242, -9.5436e-3, -9.1e-6];
-            oe.ND = [130.681389, 1.098935, 2.4987e-4, -4.718e-6];
-            oe.SA = 30.10957;
-            oe.DI = 62.2;
-            oe.MG = -6.87;
-            break;
-        case PLU: // osculating 1984 Jan 21
-            oe.ML = make_4(95.3113544, 3.980332167e-1);
-            oe.PH = [224.017];
-            oe.EC = [2.5515e-1];
-            oe.IN = [17.1329];
-            oe.ND = [110.191];
-            oe.SA = 39.8151;
-            oe.DI = 8.2;
-            oe.MG = -1.0;
-            break;
+    case MER:
+        oe.ML = make_4(178.179078, 415.2057519, 3.011e-4);
+        oe.PH = [75.899697, 1.5554889, 2.947e-4];
+        oe.EC = [2.0561421e-1, 2.046e-5, -3e-8];
+        oe.IN = [7.002881, 1.8608e-3, -1.83e-5];
+        oe.ND = [47.145944, 1.1852083, 1.739e-4];
+        oe.SA = 3.870986e-1;
+        oe.DI = 6.74;
+        oe.MG = -0.42;
+        break;
+    case VEN:
+        oe.ML = make_4(342.767053, 162.5533664, 3.097e-4);
+        oe.PH = [130.163833, 1.4080361, -9.764e-4];
+        oe.EC = [6.82069e-3, -4.774e-5, 9.1e-8];
+        oe.IN = [3.393631, 1.0058e-3, -1e-6];
+        oe.ND = [75.779647, 8.9985e-1, 4.1e-4];
+        oe.SA = 7.233316e-1;
+        oe.DI = 16.92;
+        oe.MG = -4.4;
+        break;
+    case MAR:
+        oe.ML = make_4(293.737334, 53.17137642, 3.107e-4);
+        oe.PH = [3.34218203e2, 1.8407584, 1.299e-4, -1.19e-6];
+        oe.EC = [9.33129e-2, 9.2064e-5, -7.7e-8];
+        oe.IN = [1.850333, -6.75e-4, 1.26e-5];
+        oe.ND = [48.786442, 7.709917e-1, -1.4e-6, -5.33e-6];
+        oe.SA = 1.5236883;
+        oe.DI = 9.36;
+        oe.MG = -1.52;
+        break;
+    case JUP:
+        oe.ML = make_4(238.049257, 8.434172183, 3.347e-4, -1.65e-6);
+        oe.PH = [1.2720972e1, 1.6099617, 1.05627e-3, -3.43e-6];
+        oe.EC = [4.833475e-2, 1.6418e-4, -4.676e-7, -1.7e-9];
+        oe.IN = [1.308736, -5.6961e-3, 3.9e-6];
+        oe.ND = [99.443414, 1.01053, 3.5222e-4, -8.51e-6];
+        oe.SA = 5.202561;
+        oe.DI = 196.74;
+        oe.MG = -9.4;
+        break;
+    case SAT:
+        oe.ML = make_4(266.564377, 3.398638567, 3.245e-4, -5.8e-6);
+        oe.PH = [9.1098214e1, 1.9584158, 8.2636e-4, 4.61e-6];
+        oe.EC = [5.589232e-2, -3.455e-4, -7.28e-7, 7.4e-10];
+        oe.IN = [2.492519, -3.9189e-3, -1.549e-5, 4e-8];
+        oe.ND = [112.790414, 8.731951e-1, -1.5218e-4, -5.31e-6];
+        oe.SA = 9.554747;
+        oe.DI = 165.6;
+        oe.MG = -8.88;
+        break;
+    case URA:
+        oe.ML = make_4(244.19747, 1.194065406, 3.16e-4, -6e-7);
+        oe.PH = [1.71548692e2, 1.4844328, 2.372e-4, -6.1e-7];
+        oe.EC = [4.63444e-2, -2.658e-5, 7.7e-8];
+        oe.IN = [7.72464e-1, 6.253e-4, 3.95e-5];
+        oe.ND = [73.477111, 4.986678e-1, 1.3117e-3];
+        oe.SA = 19.21814;
+        oe.DI = 65.8;
+        oe.MG = -7.19;
+        break;
+    case NEP:
+        oe.ML = make_4(84.457994, 6.107942056e-1, 3.205e-4, -6e-7);
+        oe.PH = [4.6727364e1, 1.4245744, 3.9082e-4, -6.05e-7];
+        oe.EC = [8.99704e-3, 6.33e-6, -2e-9];
+        oe.IN = [1.779242, -9.5436e-3, -9.1e-6];
+        oe.ND = [130.681389, 1.098935, 2.4987e-4, -4.718e-6];
+        oe.SA = 30.10957;
+        oe.DI = 62.2;
+        oe.MG = -6.87;
+        break;
+    case PLU: // osculating 1984 Jan 21
+        oe.ML = make_4(95.3113544, 3.980332167e-1);
+        oe.PH = [224.017];
+        oe.EC = [2.5515e-1];
+        oe.IN = [17.1329];
+        oe.ND = [110.191];
+        oe.SA = 39.8151;
+        oe.DI = 8.2;
+        oe.MG = -1.0;
+        break;
     } // end switch
 
     // Mean daily motion
@@ -192,13 +198,13 @@ class Planet {
     // Calculate perturbations for moment eph.t.
     calculatePerturbations() {
         return {
-            dl : 0,
-            dr : 0,
+            dl: 0,
+            dr: 0,
             dml: 0,
-            ds : 0,
-            dm : 0,
-            da : 0,
-            dhl : 0
+            ds: 0,
+            dm: 0,
+            da: 0,
+            dhl: 0
         };
     }
 }
@@ -567,30 +573,30 @@ const self = module.exports = {
     Neptune: new Neptune(),
     Pluto: new Pluto(),
 
-    forName: function(name) {
-        switch(name) {
-            case 'Mercury':
-                return self.Mercury;
-            case 'Venus':
-                return self.Venus;
-            case 'Mars':
-                return self.Mars;
-            case 'Jupiter':
-                return self.Jupiter;
-            case 'Saturn':
-                return self.Saturn;
-            case 'Uranus':
-                return self.Uranus;
-            case 'Neptune':
-                return self.Neptune;
-            case 'Pluto':
-                return self.Pluto;
-            default:
-                throw new Error(`No such planet: "${name}"`);
+    forName: function (name) {
+        switch (name) {
+        case 'Mercury':
+            return self.Mercury;
+        case 'Venus':
+            return self.Venus;
+        case 'Mars':
+            return self.Mars;
+        case 'Jupiter':
+            return self.Jupiter;
+        case 'Saturn':
+            return self.Saturn;
+        case 'Uranus':
+            return self.Uranus;
+        case 'Neptune':
+            return self.Neptune;
+        case 'Pluto':
+            return self.Pluto;
+        default:
+            throw new Error(`No such planet: "${name}"`);
         }
     },
 
-    meanAnomalies: function(t, dt=0) {
+    meanAnomalies: function (t, dt = 0) {
         const manom = new Map();
         for (let name of self.NAMES) {
             const pla = self.forName(name);

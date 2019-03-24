@@ -6,8 +6,6 @@ Positions of Sun, Moon and the major planets.
 Peter Duffett-Smith,
 "Astronomy With Your Personal Computer", Cambridge University Press, 1995.
 
-
-
 (с) Sergey Krushinsky, 2017
 
 ************************************************************************************/
@@ -91,9 +89,9 @@ const self = module.exports = {
         // Ecliptic obliquity
         get obliquity() {
             if (this._obliquity === null) {
-                this._obliquity = radians(obliquity(this.djd, degrees(this._deps)))
+                this._obliquity = radians(obliquity(this.djd, degrees(this._deps)));
             }
-            return this._obliquity
+            return this._obliquity;
         }
 
         // Sun true coordinates
@@ -128,23 +126,23 @@ const self = module.exports = {
             // dispatch arguments
             let args;
             switch (pla.name) {
-                case 'Mercury':
-                    args = [ma.get('Mercury'), ma.get('Venus'), ma.get('Jupiter')];
-                    break;
-                case 'Venus':
-                    args = [this._t, radians(this._ms), ma.get('Venus'), ma.get('Jupiter')];
-                    break;
-                case 'Mars':
-                    args = [radians(this._ms), ma.get('Venus'), ma.get('Mars'), ma.get('Jupiter')];
-                    break;
-                case 'Jupiter':
-                case 'Saturn':
-                case 'Uranus':
-                case 'Neptune':
-                    args = [this._t, s];
-                    break;
-                default:
-                    args = [];
+            case 'Mercury':
+                args = [ma.get('Mercury'), ma.get('Venus'), ma.get('Jupiter')];
+                break;
+            case 'Venus':
+                args = [this._t, radians(this._ms), ma.get('Venus'), ma.get('Jupiter')];
+                break;
+            case 'Mars':
+                args = [radians(this._ms), ma.get('Venus'), ma.get('Mars'), ma.get('Jupiter')];
+                break;
+            case 'Jupiter':
+            case 'Saturn':
+            case 'Uranus':
+            case 'Neptune':
+                args = [this._t, s];
+                break;
+            default:
+                args = [];
             }
             return pla.calculatePerturbations.apply(this, args);
         }
@@ -299,17 +297,17 @@ const self = module.exports = {
             if (!this._positions.has(k)) {
                 let pos;
                 switch (name) {
-                    case 'Sun':
-                        pos = this._calculateSun();
-                        break;
-                    case 'Moon':
-                        pos = this._calculateMoon();
-                        break;
-                    case 'Node':
-                        pos = this._calculateNode();
-                        break;
-                    default:
-                        pos = this._calculatePlanet(name);
+                case 'Sun':
+                    pos = this._calculateSun();
+                    break;
+                case 'Moon':
+                    pos = this._calculateMoon();
+                    break;
+                case 'Node':
+                    pos = this._calculateNode();
+                    break;
+                default:
+                    pos = this._calculatePlanet(name);
                 }
                 this._positions.set(k, pos);
             }

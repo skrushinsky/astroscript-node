@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const assert = require('chai').assert;
 const mathutils = require('../src/mathutils.js');
@@ -8,13 +8,12 @@ const ddd = mathutils.ddd;
 const radians = mathutils.radians;
 const degrees = mathutils.degrees;
 
-const jd = 2438792.99069208000 - 2415020;
 const theta = radians(55.75);
 const eps = radians(ddd(23, 26, 39.3202));
 const ramc = radians(ddd(345, 33, 19.2045));
 
 
-describe('Sensitive points', _ => {
+describe('Sensitive points', () => {
     it('Midheaven', () => {
         const got = degrees(points.midheaven(ramc, eps));
         assert.approximately(got, ddd(344, 19, 2), 1E-3);

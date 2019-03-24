@@ -31,7 +31,6 @@ const _SUN_ORBIT = {
 
 module.exports = {
 
-
     truePosition(dj) {
         let t = dj / 36525;
         let t2 = t * t;
