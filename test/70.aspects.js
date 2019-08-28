@@ -8,10 +8,10 @@ const {
     DeVore,
     ClassicWithAspectRatio,
     iterStelliums
-} = require('../src/aspects.js');
+} = require('../lib/aspects.js');
 const {
     PLANETS
-} = require('../src/ephemeris.js');
+} = require('../lib/ephemeris.js');
 
 const planets = [{
     name: 'Moon',

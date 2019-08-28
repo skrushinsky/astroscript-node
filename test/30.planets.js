@@ -2,9 +2,9 @@
 
 const assert = require('chai').assert;
 
-const mathutils = require('../src/mathutils.js');
-const planets = require('../src/ephem/planets.js');
-const sun = require('../src/ephem/sun.js');
+const mathutils = require('../lib/mathutils.js');
+const planets = require('../lib/ephem/planets.js');
+const sun = require('../lib/ephem/sun.js');
 
 describe('Perturbations', () => {
     // dl, dr, dml, ds, dm, da, dhl

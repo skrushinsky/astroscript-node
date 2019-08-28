@@ -3,11 +3,11 @@
 const assert = require('chai').assert;
 const {
     BaseChart
-} = require('../src/chart.js');
+} = require('../lib/chart.js');
 const {
     PLANETS,
     Ephemeris
-} = require('../src/ephemeris.js');
+} = require('../lib/ephemeris.js');
 
 
 describe('Base Chart', () => {

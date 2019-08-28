@@ -1,8 +1,8 @@
 'use strict';
 
 const assert = require('chai').assert;
-const mathutils = require('../src/mathutils.js');
-const houses = require('../src/houses.js');
+const mathutils = require('../lib/mathutils.js');
+const houses = require('../lib/houses.js');
 
 const radians = mathutils.radians;
 const degrees = mathutils.degrees;

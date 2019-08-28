@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('chai').assert;
-const nutation = require('../src/ephem/nutation.js');
+const nutation = require('../lib/ephem/nutation.js');
 
 describe('Nutation', () => {
     const cases = [{

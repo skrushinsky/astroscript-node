@@ -1,9 +1,9 @@
 {
   "name": "astroscript",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Library of astronomical/astrological calculations",
   "private": true,
-  "main": "src/main.js",
+  "main": "lib/main.js",
   "directories": {
     "lib": "src",
     "test": "test"
@@ -11,6 +11,9 @@
   "scripts": {
     "lint": "node node_modules/eslint/bin/eslint.js ./**/*.js",
     "test": "mocha"
+  },
+  "bin": {
+    "ephemeris": "./bin/ephemeris.js"
   },
   "keywords": [
     "astronomy",
@@ -24,7 +27,9 @@
     "lint": "^1.1.2",
     "mocha": "^4.0.1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "commander": "^3.0.0"
+  },
   "optionalDependencies": {
     "node-gd": "^1.5.4",
     "simple-hex-to-rgb": "^1.0.0",

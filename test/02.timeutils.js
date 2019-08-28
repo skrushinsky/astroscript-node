@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('chai').assert;
-const timeutils = require('../src/timeutils.js');
+const timeutils = require('../lib/timeutils.js');
 
 
 describe('Julian Day', () => {

@@ -1,9 +1,9 @@
 'use strict';
 
 const assert = require('chai').assert;
-const mathutils = require('../src/mathutils.js');
-const moon = require('../src/ephem/moon.js');
-const ephemeris = require('../src/ephemeris.js');
+const mathutils = require('../lib/mathutils.js');
+const moon = require('../lib/ephem/moon.js');
+const ephemeris = require('../lib/ephemeris.js');
 
 describe('Moon true position', () => {
 

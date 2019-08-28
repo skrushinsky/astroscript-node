@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('chai').assert;
-const { obliquity } = require('../src/ephem/obliquity.js');
+const { obliquity } = require('../lib/ephem/obliquity.js');
 
 // P.Duffett-Smith, "Astronomy With Your Personal Computer", p.54
 describe('Mean Obliquity', () => {

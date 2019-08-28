@@ -11,10 +11,10 @@ try {
 
 const assert = require('chai').assert;
 if (gd) {
-    var { Paper, WheelModel, createWheel, paintAndSaveWheel } = require('../src/graphics.js');
+    var { Paper, WheelModel, createWheel, paintAndSaveWheel } = require('../lib/graphics.js');
 }
 
-const { BaseChart } = require('../src/chart.js');
+const { BaseChart } = require('../lib/chart.js');
 
 
 describe('Paper', () => {

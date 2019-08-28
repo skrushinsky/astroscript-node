@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('chai').assert;
-const orbits = require('../src/ephem/kepler.js');
+const orbits = require('../lib/ephem/kepler.js');
 
 
 describe('True anomaly', () => {

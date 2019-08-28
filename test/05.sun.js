@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('chai').assert;
-const sun = require('../src/ephem/sun.js');
+const sun = require('../lib/ephem/sun.js');
 
 
 describe('Sun Geocentric position', () => {

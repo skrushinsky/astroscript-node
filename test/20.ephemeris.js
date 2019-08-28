@@ -1,8 +1,8 @@
 'use strict';
 
 const assert = require('chai').assert;
-const ephemeris = require('../src/ephemeris.js');
-const mathutils = require('../src/mathutils.js');
+const ephemeris = require('../lib/ephemeris.js');
+const mathutils = require('../lib/mathutils.js');
 const Ephemeris = ephemeris.Ephemeris;
 
 describe('True geocentric', () => {

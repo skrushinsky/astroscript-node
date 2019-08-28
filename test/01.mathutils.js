@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('chai').assert;
-const mathutils = require('../src/mathutils.js');
+const mathutils = require('../lib/mathutils.js');
 
 describe('Fractional part of a number', () => {
     it('frac(5.5) should be 0.5', () => {
