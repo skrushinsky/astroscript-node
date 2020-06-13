@@ -21,8 +21,9 @@ by _Peter Duffett-Smith_.
 Tested on Linux 64-bit and macOS 10.14. *Master* branch is compatible with Windows
 (tested on Windows 10 Professional). But it lacks graphics modules, since
 [NodeGD](https://www.npmjs.com/package/node-gd) library will not build on Windows.
-To use graphics on Unix, checkout *with-graphics* branch.
-
+To use graphics on Unix, checkout
+[with-graphics](https://github.com/skrushinsky/astroscript-node/tree/with-graphics)
+branch.
 
 ## Installation
 
