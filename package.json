@@ -12,9 +12,6 @@
     "lint": "node node_modules/eslint/bin/eslint.js ./**/*.js",
     "test": "mocha"
   },
-  "bin": {
-    "ephemeris": "./bin/ephemeris.js"
-  },
   "keywords": [
     "astronomy",
     "astrology"
