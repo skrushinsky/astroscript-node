@@ -18,8 +18,7 @@ by _Peter Duffett-Smith_.
 
 * Node.JS >= 8.16
 
-Tested on Linux 64-bit, Windows 10 Professional and macOS 10.14. There should
-be no problems at other platforms.
+Tested on Linux 64-bit and macOS 10.14.
 
 ## Installation
 
