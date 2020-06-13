@@ -1,6 +1,6 @@
 {
   "name": "astroscript",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Library of astronomical/astrological calculations",
   "private": true,
   "main": "lib/main.js",
@@ -27,10 +27,5 @@
   "dependencies": {
     "commander": "^3.0.0"
   },
-  "optionalDependencies": {
-    "simple-hex-to-rgb": "^1.0.0",
-    "sprintf-js": "^1.1.1",
-    "temp-dir": "^1.0.0",
-    "tmp": "0.0.33"
-  }
+  "optionalDependencies": {}
 }
