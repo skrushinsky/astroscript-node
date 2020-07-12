@@ -11,9 +11,9 @@ const {
 
 
 describe('Base Chart', () => {
-    const chart = new BaseChart({
-        date: new Date(1965, 1, 1, 14, 46, 0)
-    });
+    const chart = new BaseChart(
+        {date: new Date(1965, 1, 1, 14, 46, 0)}
+    );
 
     it('DJD', () => {
         assert.approximately(chart.djd, 23772.990277, 1E-6);
