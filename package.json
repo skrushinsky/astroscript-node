@@ -1,6 +1,6 @@
 {
   "name": "astroscript",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Library of astronomical/astrological calculations",
   "private": true,
   "main": "lib/main.js",
